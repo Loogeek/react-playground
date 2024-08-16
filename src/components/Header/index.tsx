@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MoonOutlined, SunOutlined } from "@ant-design/icons";
+import { PlaygroundContext } from "@/PlaygroundContext";
+
 import logoSvg from "@/assets/react.svg";
+import styles from "./index.module.scss";
 
 const Header: React.FC = () => {
+  const { theme, setTheme } = useContext(PlaygroundContext);
+  console.log(1111, theme);
   return (
-    <header className="border-b border-black h-[50px] px-5 box-border flex items-center justify-between">
-      <div className="flex items-center text-xl">
-        <img alt="logo" src={logoSvg} className="h-6 mr-[10px]" />
-        React Playground
+    <div className={styles.header}>
+      <div className={styles.logo}>
+        <img alt="logo" src={logoSvg} />
+        <span>React Playground</span>
       </div>
-    </header>
+      <div className={styles.links}>
+        {theme === "light" && (
+          <MoonOutlined
+            title="切换暗色主题"
+            className={styles.theme}
+            onClick={() => setTheme("dark")}
+          />
+        )}
+        {theme === "dark" && (
+          <SunOutlined
+            title="切换亮色主题"
+            className={styles.theme}
+            onClick={() => setTheme("light")}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

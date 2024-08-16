@@ -1,25 +1,28 @@
 import { Allotment } from "allotment";
+import clsx from "clsx";
 import "allotment/dist/style.css";
 import Header from "./components/Header";
 import CodeEditor from "./components/CodeEditor";
 import Preview from "./components/Preview";
-import PlaygroundProvider from "./PlaygroundContext";
+import { useContext } from "react";
+import { PlaygroundContext } from "./PlaygroundContext";
+
+import "./index.css";
 
 function App() {
+  const { theme } = useContext(PlaygroundContext);
   return (
-    <PlaygroundProvider>
-      <div className="h-screen">
-        <Header />
-        <Allotment defaultSizes={[100, 100]}>
-          <Allotment.Pane minSize={0}>
-            <CodeEditor />
-          </Allotment.Pane>
-          <Allotment.Pane minSize={0}>
-            <Preview />
-          </Allotment.Pane>
-        </Allotment>
-      </div>
-    </PlaygroundProvider>
+    <div className={clsx("h-screen", theme)}>
+      <Header />
+      <Allotment defaultSizes={[100, 100]}>
+        <Allotment.Pane minSize={0}>
+          <CodeEditor />
+        </Allotment.Pane>
+        <Allotment.Pane minSize={0}>
+          <Preview />
+        </Allotment.Pane>
+      </Allotment>
+    </div>
   );
 }
 

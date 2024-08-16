@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState, useRef, useEffect, MouseEventHandler } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Popconfirm } from "antd";
 
 import styles from "./index.module.scss";

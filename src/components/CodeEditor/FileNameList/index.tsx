@@ -1,5 +1,5 @@
 import { PlaygroundContext } from "@/PlaygroundContext";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import FileNameItem from "./FileNameItem";
 
 import styles from "./index.module.scss";

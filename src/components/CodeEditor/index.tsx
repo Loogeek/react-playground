@@ -5,7 +5,8 @@ import FileNameList from "./FileNameList";
 import { PlaygroundContext } from "@/PlaygroundContext";
 
 const CodeEditor: React.FC = () => {
-  const { files, setFiles, selectedFileName } = useContext(PlaygroundContext);
+  const { files, setFiles, selectedFileName, theme } =
+    useContext(PlaygroundContext);
 
   function onEditorChange(value?: string) {
     files[selectedFileName].value = value!;
@@ -21,6 +22,9 @@ const CodeEditor: React.FC = () => {
       <Editor
         file={files[selectedFileName]}
         onChange={debounce(onEditorChange, 500)}
+        options={{
+          theme: `vs-${theme}`,
+        }}
       />
     </div>
   );
