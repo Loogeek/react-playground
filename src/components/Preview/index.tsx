@@ -3,15 +3,53 @@ import { PlaygroundContext } from "../../PlaygroundContext";
 import { compile } from "./compiler";
 import iframeRaw from "./iframe.html?raw";
 import { IMPORT_MAP_FILE_NAME } from "../../files";
+import Message from "../Message";
+
+interface MessageData {
+  data: {
+    type: string;
+    message: string;
+  };
+}
 
 export default function Preview() {
   const { files } = useContext(PlaygroundContext);
   const [compiledCode, setCompiledCode] = useState("");
+  const [playgroundErr, setPlaygroundErr] = useState("");
 
   useEffect(() => {
     const res = compile(files);
     setCompiledCode(res);
   }, [files]);
+
+  const handleMessage = (msg: MessageData) => {
+    const { type, message } = msg.data;
+    if (type === "ERROR") {
+      setPlaygroundErr(message);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   const handleError = (msg: MessageData) => {
+  //     const { type, message } = msg.data;
+  //     if (type === "ERROR") {
+  //       setPlaygroundErr(message);
+  //     }
+  //   };
+
+  //   window.addEventListener("message", handleError);
+
+  //   return () => {
+  //     window.removeEventListener("message", handleError);
+  //   };
+  // }, []);
 
   const getIframeUrl = () => {
     console.log(files);
@@ -44,11 +82,7 @@ export default function Preview() {
           border: "none",
         }}
       />
-      {/* <Editor file={{
-            name: 'dist.js',
-            value: compiledCode,
-            language: 'javascript'
-        }}/> */}
+      <Message type="error" content={playgroundErr} />
     </div>
   );
 }
