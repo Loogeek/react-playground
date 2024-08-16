@@ -1,5 +1,5 @@
 import { strFromU8, strToU8, unzlibSync, zlibSync } from "fflate";
-import { Files } from "./PlaygroundContext";
+import { Files } from "@/PlaygroundContext";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 
